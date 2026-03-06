@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>임시 게시글</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #816c86;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+
+        .post-card {
+            width: 50%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            padding-left: 40px;
+            padding-bottom: 30px;
+            box-sizing: border-box;
+        }
+
+        /* 상단 바 (헤더) 스타일 */
+        .header-box {
+            width: 50%;
+            height: 80px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .logo-circle {
+            width: 40px; height: 40px; background-color: black; border-radius: 50%;
+            background-image: url('https://i.ibb.co/yF0D9yJq/265834165.png'); background-size: cover; background-position: center;
+        }
+
+        .logo-circle:hover {
+            transform: scale(1.1); /* 마우스를 올리면 살짝 커지는 효과 */
+        }
+
+        .site-title { font-size: 1.2rem; font-weight: bold; color: #333; }
+        .nav-menu { display: flex; gap: 20px; }
+        .nav-menu a { color: #333; font-weight: bold; text-decoration: none; }
+        .nav-menu a:hover { color: #007bff; }
+
+        /* 히단 바 */
+        .bottom-box {
+            width: 50%;
+            height: 75px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        <div class="header-left">
+            <a href="index.html"><div class="logo-circle"></div></a>
+            <span class="site-title"><a href="index.html"><span style="color:#333">Yuhan</span></a></span>
+        </div>
+            <div class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="post.html">Post</a>
+            </div>
+    </div>
+
+    <div class="post-card">
+        <h1>임시 게시글</h1>
+        <p>테스트</p>
+    </div>
+
+    <div class="bottom-box">
+        <p>하단 바(임시)</p>
+    </div>
+</body>
+</html>
