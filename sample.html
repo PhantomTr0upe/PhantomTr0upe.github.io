@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>홀로스타즈 템퍼스 도플갱어 한글 패치 배포</title>
+    <style>
+        @media (max-width: 768px) {
+        .header-box, .container, .content-box, .post-list-container, .post-card, .comment-box {
+        width: 90%; /* 60%였던 너비를 90%로 넓혀줘 */
+        }
+    
+        .site-title {
+        font-size: 1rem; /* 글씨가 너무 크면 줄여주고 */
+        }
+        }
+        
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #816c86;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+
+        .post-card {
+            width: 50%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            padding-left: 40px;
+            padding-bottom: 30px;
+            box-sizing: border-box;
+        }
+
+        /* 상단 바 (헤더) 스타일 */
+        .header-box {
+            width: 50%;
+            height: 80px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .logo-circle {
+            width: 40px; height: 40px; background-color: black; border-radius: 50%;
+            background-image: url('https://i.ibb.co/yF0D9yJq/265834165.png'); background-size: cover; background-position: center;
+            transition: transform 0.2s; /* 누를 때 효과를 위해 */
+        }
+
+        .logo-circle:hover {
+            transform: scale(1.1); /* 마우스를 올리면 살짝 커지는 효과 */
+        }
+
+        .site-title { font-size: 1.2rem; font-weight: bold; color: #333; }
+        .nav-menu { display: flex; gap: 20px; }
+        .nav-menu a { color: #333; font-weight: bold; text-decoration: none; }
+        .nav-menu a:hover { color: #007bff; }
+
+        /* 히단 바 */
+        .bottom-box {
+            width: 50%;
+            height: 75px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* 2. 댓글 상자 스타일 (게시글 상자 스타일을 그대로 복사해왔어!) */
+        .comment-box {
+            background: white;
+            width: 50%;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 30px; /* 게시글 상자와의 간격 */
+            margin-bottom: 50px; /* 맨 밑바닥 여백 */
+            box-sizing: border-box;
+        }
+
+        .comment-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+</style>
+</head>
+<body>
+
+    <div class="header-box">
+        <div class="header-left">
+            <a href="index.html"><div class="logo-circle"></div></a>
+            <span class="site-title"><a href="index.html"><span style="color:#333">Yuhan</span></a></span>
+        </div>
+            <div class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="post.html">Post</a>
+            </div>
+    </div>
+
+    <div class="post-card">
+        <h1>홀로스타즈 템퍼스 도플갱어 한글 패치 배포</h1>
+        <p>언젠가는 올리겠지</p>
+    </div>
+
+    <div class="comment-box">
+        <!-- Elfsight Comments | Untitled Comments -->
+        <script src="https://elfsightcdn.com/platform.js" async></script>
+        <div class="elfsight-app-c606dc68-1016-4981-9e53-b1e701b6104d" data-elfsight-app-lazy></div>
+    </div>
+
+</body>
+</html>
