@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | Yuhan</title> 
+    <style>
+        /* 네가 만든 디자인 그대로 유지! */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #816c86;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+
+        .post-card {
+            width: 50%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px; /* 여백을 조금 더 넓혔어 */
+            padding-top: 7px;
+            box-sizing: border-box;
+        }
+
+        .header-box {
+            width: 50%;
+            height: 80px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .logo-circle {
+            width: 40px; height: 40px; background-color: black; border-radius: 50%;
+            background-image: url('https://i.ibb.co/yF0D9yJq/265834165.png'); background-size: cover; background-position: center;
+            transition: transform 0.2s;
+        }
+        .logo-circle:hover { transform: scale(1.1); }
+        .site-title { font-size: 1.2rem; font-weight: bold; color: #333; }
+        .nav-menu { display: flex; gap: 20px; }
+        .nav-menu a { color: #333; font-weight: bold; text-decoration: none; }
+        .nav-menu a:hover { color: #007bff; }
+
+        .comment-box {
+            background: white;
+            width: 50%;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            margin-bottom: 50px;
+            box-sizing: border-box;
+        }
+
+        /* 하이퍼링크 밑줄 제거 */
+        a {
+            text-decoration: none;
+        }
+
+        #backToTop {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 50px; height: 50px; border-radius: 50%;
+            background-color: white; color: #333; border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer;
+            font-size: 20px; transition: all 0.3s;
+            opacity: 0; visibility: hidden; z-index: 999;
+        }
+        #backToTop.show { opacity: 1; visibility: visible; }
+        #backToTop:hover { background-color: #f0f2f5; transform: translateY(-5px); }
+
+        @media (max-width: 768px) {
+            .header-box, .post-card, .comment-box { width: 90%; padding: 20px; }
+            .site-title { font-size: 1rem; }
+            .nav-menu a { font-size: 0.8rem; gap: 10px; }
+        }
+
+        /* 본문 안의 이미지가 튀어나가지 않게 해주는 설정 */
+        .post-card img { max-width: 100%; height: auto; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">
+        <div class="header-left">
+            <a href="/"><div class="logo-circle"></div></a>
+            <span class="site-title"><a href="/"><span style="color:#333">Yuhan</span></a></span>
+        </div>
+        <div class="nav-menu">
+            <a href="/">Home</a>
+            <a href="/postlist.html">Post</a>
+        </div>
+    </div>
+
+    <div class="post-card">
+        <h1>{{ page.title }}</h1> <p style="color: gray;">{{ page.date | date: "%Y년 %m월 %d일" }}</p> <hr style="border: 0; height: 1px; background: #eee; margin: 20px 0;">
+        
+        <div class="post-content">
+            {{ content }} </div>
+    </div>
+
+    <div class="comment-box">
+        <script src="https://elfsightcdn.com/platform.js" async></script>
+        <div class="elfsight-app-c606dc68-1016-4981-9e53-b1e701b6104d" data-elfsight-app-lazy></div>
+    </div>
+
+    <button id="backToTop" title="위로 가기">▲</button>
+
+    <script>
+        const topBtn = document.getElementById("backToTop");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                topBtn.classList.add("show");
+            } else {
+                topBtn.classList.remove("show");
+            }
+        };
+        topBtn.onclick = function() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+    </script>
+
+</body>
+</html>
