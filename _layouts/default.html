@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        @font-face {
+            font-family: 'CloudSansCode';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-code.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --bg-color: #1a151d; 
+            --window-bg: #e4e4e4;
+            --window-border-light: #ffffff;
+            --window-border-dark: #808080;
+            --main-purple: #4E00F9; 
+            --accent-blue: #8AD0FD; 
+        }
+
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 10px; 
+            font-family: 'Courier New', 'CloudSansCode';
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .window {
+            background: var(--window-bg);
+            border: 3px solid;
+            border-color: var(--window-border-light) var(--window-border-dark) var(--window-border-dark) var(--window-border-light);
+            box-shadow: 10px 10px 0px rgba(78, 0, 249, 0.2);
+            width: 90%; 
+            max-width: 900px;
+            margin-bottom: 20px;
+            overflow: hidden; 
+            
+        }
+
+        .title-bar {
+            background: linear-gradient(90deg, var(--main-purple), var(--accent-blue));
+            padding: 8px 12px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: inset 1px 1px 1px rgba(255,255,255,0.3); 
+        }
+
+        .title-bar-text {
+            font-size: 1.15rem; 
+            font-family: 'Courier New', 'CloudSansCode', monospace; 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; 
+        }
+
+        .title-bar-controls {
+            display: flex;
+            gap: 4px;
+        }
+
+        .title-bar-controls button {
+            width: 23px;  
+            height: 21px; 
+            background: var(--window-bg);
+            border: 2px solid;
+            border-color: white var(--window-border-dark) var(--window-border-dark) white;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            font-family: 'Arial', sans-serif; 
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .title-bar-controls .btn-close {
+            background-color: #e81123; 
+            color: white;
+            border-color: #f5b0b7 #820b13 #820b13 #f5b0b7; 
+        }
+
+        .title-bar-controls .btn-close:hover {
+            background-color: #f1707a; 
+        }
+
+        .title-bar-controls .btn-close:active {
+            border-color: #820b13 #f5b0b7 #f5b0b7 #820b13;
+            padding-top: 1px;
+        }
+
+        .title-bar-controls .btn-minimize:active {
+            border-color: var(--window-border-dark) white white var(--window-border-dark);
+            padding-top: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 5px; 
+            padding: 5px;
+            background: var(--window-bg);
+            border-bottom: 2px solid var(--window-border-dark);
+        }
+
+        .nav-menu a {
+            display: inline-block;
+            padding: 3px 10px;
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 2px solid transparent; 
+        }
+
+        .nav-menu a:hover {
+            background-color: #e0e0e0; 
+            border-color: white var(--window-border-dark) var(--window-border-dark) white; 
+            color: var(--main-purple); 
+        }
+
+        .nav-menu a:active {
+            border-color: var(--window-border-dark) white white var(--window-border-dark); 
+            padding: 4px 9px 2px 11px; 
+            background-color: #d0d0d0;
+        }
+
+        .search-container {
+            background: #808080; 
+            padding: 2px;
+            display: flex;
+            align-items: stretch; 
+            gap: 0; 
+            border-bottom: 2px solid white;
+        }
+
+        .search-label {
+            background: var(--window-bg);
+            padding: 0 10px;
+            display: flex;
+            align-items: center; 
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 2px solid;
+            border-color: white var(--window-border-dark) var(--window-border-dark) white;
+            margin-right: 2px; 
+        }
+
+        #global-search {
+            flex-grow: 1; 
+            border: 2px inset white;
+            background: white;
+            padding: 5px;
+            font-family: 'Courier New', 'CloudSansCode', monospace;
+            font-size: 14px;
+            outline: none;
+            margin: 0; 
+        }
+
+        .search-btn {
+            background: var(--window-bg);
+            border: 2px solid;
+            border-color: white var(--window-border-dark) var(--window-border-dark) white;
+            cursor: pointer;
+            padding: 0 15px;
+            font-size: 0.8rem;
+            font-family: 'Courier New', 'CloudSansCode', monospace;
+            font-weight: bold;
+            margin-left: 1px; 
+            display: flex;
+            align-items: center;
+        }
+
+        .search-btn:active {
+            border-color: var(--window-border-dark) white white var(--window-border-dark);
+            padding: 1px 14px 0 16px; 
+        }
+
+        .window-body { padding: 15px; color: #000; word-break: break-all; }
+
+        @media (max-width: 480px) {
+            .title-bar-text { font-size: 1rem; }
+            .window { width: 95%; }
+        }
+
+        body {
+            background-color: #ffffff; 
+    
+            background-image: url('{{ site.baseurl }}/bg.svg'); 
+    
+            background-repeat: repeat; 
+            
+            background-size: 800px; 
+    
+            background-attachment: fixed;
+            background-position: center;
+
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+</style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">Yuhan_OS_v1.1.exe</div>
+            <div class="title-bar-controls">
+                <button class="btn-minimize">_</button>
+                <button class="btn-close">X</button>
+            </div>
+        </div>
+        
+        <div class="nav-menu">
+            <a href="/">[Home]</a>
+            <a href="/postlist.html">[Post]</a>
+        </div>
+
+        <div class="search-container">
+            <div class="search-label">Search:</div>
+            <input type="text" id="global-search" placeholder="Enter file name..." onkeypress="if(event.keyCode==13) { searchFile(); }">
+            <button class="search-btn" onclick="searchFile()">[Go]</button>
+        </div>
+
+        <div class="window-body">
+            {{ content }}
+        </div>
+    </div>
+
+    <script>
+        function searchFile() {
+            const query = document.getElementById('global-search').value;
+            if (query.trim() !== "") {
+                window.location.href = "{{ site.baseurl }}/search.html?q=" + encodeURIComponent(query);
+            }
+        }
+    </script>
+</body>
+</html>
