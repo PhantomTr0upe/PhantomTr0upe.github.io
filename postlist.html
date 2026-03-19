@@ -1,0 +1,42 @@
+---
+layout: default
+title: Post List
+---
+
+<h2 style="color: #4b3052; margin-bottom: 20px; border-bottom: 1px double var(--window-border-dark); padding-bottom: 5px;">
+    📂 C:\WINDOWS\System32\Posts
+</h2>
+
+<ul id="post-list" style="list-style: none; padding: 0;">
+    {% if site.posts.size > 0 %}
+        {% for post in site.posts %}
+        <li style="margin-bottom: 15px;">
+            <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: inherit; display: block; background: white; border: 1px solid #808080; padding: 15px; box-shadow: inset -1px -1px #000, inset 1px 1px #fff; transition: background 0.1s;">
+                <div class="post-item-inner">
+                    <small style="color: #666;">[Date: {{ post.date | date: "%Y-%m-%d" }}]</small><br>
+                    <strong style="color: #4b3052; font-size: 1.1rem; display: block; margin-top: 5px;">
+                        📄 {{ post.title }}
+                    </strong>
+                    <p style="margin: 8px 0 0 0; font-size: 0.9rem; color: #444;">
+                        {{ post.excerpt | strip_html | truncate: 80 }}
+                    </p>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    {% else %}
+        <li style="padding: 20px; text-align: center; border: 1px dashed #808080;">
+            [!] No files found in this directory.
+        </li>
+    {% endif %}
+</ul>
+
+<style>
+    /* 마우스를 올렸을 때 살짝 색이 변하게 해서 클릭 가능하다는 걸 알려줌 */
+    #post-list a:hover {
+        background-color: #f0f0f0 !important;
+    }
+    #post-list a:active {
+        box-shadow: inset 1px 1px #000, inset -1px -1px #fff !important; /* 클릭했을 때 쑥 들어가는 느낌 */
+    }
+</style>
