@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+<article class="post-container">
+    <header class="post-header" style="margin-bottom: 20px; border-bottom: 1px double var(--window-border-dark); padding-bottom: 10px;">
+        <h1 style="margin: 0; color: #4b3052;">{{ page.title }}</h1>
+        <time style="font-size: 0.9rem; color: #666;">Date: {{ page.date | date: "%Y-%m-%d" }}</time>
+    </header>
+
+    <div class="post-content" style="line-height: 1.6; background: rgba(255, 255, 255, 0.5); padding: 15px; border: 1px inset white;">
+        {{ content }}
+    </div>
+
+    <footer style="margin-top: 30px;">
+        <a href="/postlist.html" style="display: inline-block; background: var(--window-bg); border: 2px solid; border-color: white #808080 #808080 white; padding: 5px 15px; text-decoration: none; color: black; font-size: 0.9rem;">
+            [ Back to List ]
+        </a>
+    </footer>
+</article>
