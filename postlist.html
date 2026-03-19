@@ -1,0 +1,19 @@
+---
+layout: default
+title: Post List
+---
+<h2>My Posts</h2>
+<p id="no-results" style="display: none; color: #ff0000; font-weight: bold; padding: 10px; border: 1px dashed red;">
+    [!] ERROR: 404 File Not Found.
+</p>
+
+<ul id="post-list" style="list-style: none; padding: 0;">
+    {% for post in site.posts %}
+    <li class="post-item-container" style="margin-bottom: 15px; border: 1px solid #808080; padding: 10px; background: white;">
+        <small>{{ post.date | date: "%Y-%m-%d" }}</small><br>
+        <a href="{{ post.url | relative_url }}" class="post-title" style="color: #4b3052; font-weight: bold; text-decoration: none;">
+            {{ post.title }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
