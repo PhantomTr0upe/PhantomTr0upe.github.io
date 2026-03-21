@@ -302,27 +302,32 @@
 
         .profile-nickname {
             width: 100%;
+            box-sizing: border-box;
             background: #000080;
             color: white;
-            padding: 4px 8px;
+            padding: 6px 10px;
             font-weight: bold;
             font-size: 0.9rem;
             margin-bottom: 10px;
-            border: 1px inset rgba(255,255,255,0.5);
+            border: 2px inset rgba(255,255,255,0.5);
+            word-break: break-all;
         }
 
         .profile-bio {
             width: 100%;
+            box-sizing: border-box;
             background: white;
             border: 2px inset white;
-            padding: 10px;
-            font-size: 0.85rem;
-            height: 140px; 
-            box-sizing: border-box; 
+            padding: 8px 10px;
+            font-size: 0.8rem;
+            min-height: 110px;
             color: #333;
             word-break: break-all;
-            line-height: 1.6 !important;
-            overflow-y: auto;
+            line-height: 1.4 !important; 
+        }
+
+        .profile-bio p {
+            margin: 0 !important;
         }
 
         @keyframes quick-glitch {
