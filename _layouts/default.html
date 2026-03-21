@@ -241,23 +241,6 @@
         }
 
 
-        .profile-img-box {
-            width: 100%;
-            max-width: 230px; 
-            aspect-ratio: 1 / 1; 
-            border: 2px inset white;
-            background: #c0c0c0;
-            overflow: hidden;
-            margin: 0 auto 10px auto;
-        }
-
-        .profile-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-        }
-
-
         @media (max-width: 767px) {
             .sidebar {
                 width: 80%;
@@ -297,8 +280,9 @@
         .profile-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             padding: 10px;
+            height: 100%;
         }
 
         .profile-img-box {
@@ -333,10 +317,12 @@
             border: 2px inset white;
             padding: 10px;
             font-size: 0.85rem;
-            min-height: 100px;
+            height: 140px; 
+            box-sizing: border-box; 
             color: #333;
             word-break: break-all;
-            line-height: 2 !important;
+            line-height: 1.6 !important;
+            overflow-y: auto;
         }
 
         @keyframes quick-glitch {
@@ -457,7 +443,7 @@
             </div>
 
             <div class="profile-bio">
-                <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--main-purple); line-height: 2;">[ STATUS ]</p>
+                <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--main-purple);">[ STATUS ]</p>
                 <p style="margin: 0;">
                     Please verify your Hunter License.<br>
                     > Current Location: Meteor City<br>
