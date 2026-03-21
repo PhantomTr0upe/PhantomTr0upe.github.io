@@ -232,11 +232,13 @@
 
         .sidebar-left {
             left: 20px;
+            line-height: 1.7 !important;
         }
 
 
         .sidebar-right {
             right: 20px;
+            line-height: 1.7 !important;
         }
 
 
@@ -298,6 +300,7 @@
             flex-direction: column;
             align-items: center;
             padding: 10px;
+            line-height: 1.7 !important;
         }
 
         .profile-img-box {
@@ -324,6 +327,7 @@
             font-size: 0.9rem;
             margin-bottom: 10px;
             border: 1px inset rgba(255,255,255,0.5);
+            line-height: 1.7 !important;
         }
 
         .profile-bio {
@@ -335,6 +339,7 @@
             min-height: 100px;
             color: #333;
             word-break: break-all;
+            line-height: 1.7 !important;
         }
 
         @keyframes quick-glitch {
@@ -426,9 +431,9 @@
                 <button onclick="toggleSidebar('left')">X</button>
             </div>
         </div>
-        <div class="window-body" style="font-size: 0.85rem; padding: 10px;">
-            <p style="margin: 0 0 10px 0; color: #000080; font-weight: bold; border-bottom: 1px solid #808080;">C:\Yuhan_OS_v1\CATEGORIES</p>
-            <ul style="list-style: none; padding-left: 5px; margin: 0;">
+        <div class="window-body" style="font-size: 0.85rem; padding: 10px; line-height: 1.7;">
+            <p style="margin: 0 0 10px 0; color: #000080; font-weight: bold; border-bottom: 1px solid #808080; line-height: 1.7;">C:\Yuhan_OS_v1\CATEGORIES</p>
+            <ul style="list-style: none; padding-left: 5px; margin: 0; line-height: 1.7;">
                 <li>📄 <a href="/postlist.html" onclick="handleCategoryClick()" style="text-decoration: none; color: #000;">[ALL_POSTS]</a></li>
                 <li>📁 <a href="/category.html?type=test" onclick="handleCategoryClick()" style="text-decoration: none; color: #000;">TEST</a></li>
             </ul>
@@ -437,7 +442,7 @@
 
     
     <aside id="sidebar-right" class="sidebar sidebar-right">
-        <div class="title-bar" style="background: #808080;">
+        <div class="title-bar" style="background: #808080; line-height: 1.7;">
             <div class="title-bar-text">USER_PROFILE</div>
             <div class="title-bar-controls">
                 <button onclick="toggleSidebar('right')">X</button>
@@ -455,7 +460,7 @@
             </div>
 
             <div class="profile-bio">
-                <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--main-purple);">[ STATUS ]</p>
+                <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--main-purple); line-height: 1.7;">[ STATUS ]</p>
                 <p style="margin: 0;">
                     Please verify your Hunter License.<br>
                     > Current Location: Meteor City<br>
