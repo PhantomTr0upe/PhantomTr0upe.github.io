@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        @font-face {
+            font-family: 'CloudSansCode';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-code.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --bg-color: #1a151d; 
+            --window-bg: #e4e4e4;
+            --window-border-light: #ffffff;
+            --window-border-dark: #808080;
+            --main-purple: #4E00F9; 
+            --accent-blue: #8AD0FD; 
+        }
+
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 10px; 
+            font-family: 'Courier New', 'CloudSansCode';
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .window {
+            background: var(--window-bg);
+            border: 3px solid;
+            border-color: var(--window-border-light) var(--window-border-dark) var(--window-border-dark) var(--window-border-light);
+            box-shadow: 10px 10px 0px rgba(78, 0, 249, 0.2);
+            width: 90%; 
+            max-width: 900px;
+            margin-bottom: 20px;
+            overflow: hidden; 
+            
+        }
+
+        .title-bar {
+            background: linear-gradient(90deg, var(--main-purple), var(--accent-blue));
+            padding: 8px 12px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: inset 1px 1px 1px rgba(255,255,255,0.3); 
+        }
+
+        .title-bar-text {
+            font-size: 1.15rem; 
+            font-family: 'Courier New', 'CloudSansCode', monospace; 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; 
+        }
+
+        .title-bar-controls {
+            display: flex;
+            gap: 4px;
+        }
+
+        .title-bar-controls button {
+            width: 23px;  
+            height: 21px; 
+            background: var(--window-bg);
+            border: 2px solid;
+            border-color: white var(--window-border-dark) var(--window-border-dark) white;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            font-family: 'Arial', sans-serif; 
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .title-bar-controls .btn-close {
+            background-color: #e81123; 
+            color: white;
+            border-color: #f5b0b7 #820b13 #820b13 #f5b0b7; 
+        }
+
+        .title-bar-controls .btn-close:hover {
+            background-color: #f1707a; 
+        }
+
+        .title-bar-controls .btn-close:active {
+            border-color: #820b13 #f5b0b7 #f5b0b7 #820b13;
+            padding-top: 1px;
+        }
+
+        .title-bar-controls .btn-minimize:active {
+            border-color: var(--window-border-dark) white white var(--window-border-dark);
+            padding-top: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 5px; 
+            padding: 5px;
+            background: var(--window-bg);
+            border-bottom: 2px solid var(--window-border-dark);
+        }
+
+        .nav-menu a {
+            display: inline-block;
+            padding: 3px 10px;
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 2px solid transparent; 
+        }
+
+        .nav-menu a:hover {
+            background-color: #e0e0e0; 
+            border-color: white var(--window-border-dark) var(--window-border-dark) white; 
+            color: var(--main-purple); 
+        }
+
+        .nav-menu a:active {
+            border-color: var(--window-border-dark) white white var(--window-border-dark); 
+            padding: 4px 9px 2px 11px; 
+            background-color: #d0d0d0;
+        }
+
+        .search-container {
+            background: #808080; 
+            padding: 2px;
+            display: flex;
+            align-items: stretch; 
+            gap: 0; 
+            border-bottom: 2px solid white;
+        }
+
+        .search-label {
+            background: var(--window-bg);
+            padding: 0 10px;
+            display: flex;
+            align-items: center; 
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 2px solid;
+            border-color: white var(--window-border-dark) var(--window-border-dark) white;
+            margin-right: 2px; 
+        }
+
+        #global-search {
+            flex-grow: 1; 
+            border: 2px inset white;
+            background: white;
+            padding: 5px;
+            font-family: 'Courier New', 'CloudSansCode', monospace;
+            font-size: 14px;
+            outline: none;
+            margin: 0; 
+        }
+
+        .search-btn {
+            background: var(--window-bg);
+            border: 2px solid;
+            border-color: white var(--window-border-dark) var(--window-border-dark) white;
+            cursor: pointer;
+            padding: 0 15px;
+            font-size: 0.8rem;
+            font-family: 'Courier New', 'CloudSansCode', monospace;
+            font-weight: bold;
+            margin-left: 1px; 
+            display: flex;
+            align-items: center;
+        }
+
+        .search-btn:active {
+            border-color: var(--window-border-dark) white white var(--window-border-dark);
+            padding: 1px 14px 0 16px; 
+        }
+
+        .window-body { padding: 15px; color: #000; word-break: break-all; }
+
+        @media (max-width: 480px) {
+            .title-bar-text { font-size: 1rem; }
+            .window { width: 95%; }
+        }
+
+        body {
+            background-color: #ffffff; 
+    
+            background-image: url('{{ site.baseurl }}/bg.svg'); 
+    
+            background-repeat: repeat; 
+            
+            background-size: 800px; 
+    
+            background-attachment: fixed;
+            background-position: center;
+
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+
+
+        .sidebar {
+            position: fixed;
+            top: 20px;
+            min-height: 400px;
+            width: 250px; 
+            z-index: 9999;
+            background: var(--window-bg);
+            border: 3px solid;
+            border-color: var(--window-border-light) var(--window-border-dark) var(--window-border-dark) var(--window-border-light);
+            transition: transform 0.3s ease;
+        }
+
+
+        .sidebar-left {
+            left: 20px;
+        }
+
+
+        .sidebar-right {
+            right: 20px;
+        }
+
+
+        .profile-img-box {
+            width: 100%;
+            max-width: 230px; 
+            aspect-ratio: 1 / 1; 
+            border: 2px inset white;
+            background: #c0c0c0;
+            overflow: hidden;
+            margin: 0 auto 10px auto;
+        }
+
+        .profile-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+        }
+
+
+        @media (max-width: 767px) {
+            .sidebar {
+                width: 80%;
+                height: 100vh;
+                top: 0;
+                left: 0;
+                transform: translateX(-100%); 
+            }
+            .sidebar-right {
+                left: auto;
+                right: 0;
+                transform: translateX(100%);
+            }
+            .sidebar.active {
+                transform: translateX(0) !important;
+            }
+        }
+
+
+        @media (min-width: 768px) {
+            .sidebar-left { transform: translateX(0); }
+            .sidebar-right { transform: translateX(0); }
+
+            .sidebar-left.inactive { transform: translateX(-110%); }
+            .sidebar-right.inactive { transform: translateX(110%); }
+
+            body { 
+                padding-left: 270px; 
+                padding-right: 270px; 
+                transition: padding 0.3s ease; 
+            }
+            
+
+            body.no-left { padding-left: 20px !important; }
+            body.no-right { padding-right: 20px !important; }
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .profile-img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1; 
+            border: 2px inset white;
+            background: #c0c0c0;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .profile-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-nickname {
+            width: 100%;
+            background: #000080;
+            color: white;
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            border: 1px inset rgba(255,255,255,0.5);
+        }
+
+        .profile-bio {
+            width: 100%;
+            background: white;
+            border: 2px inset white;
+            padding: 10px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            min-height: 100px;
+            color: #333;
+            word-break: break-all;
+        }
+
+        @keyframes quick-glitch {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            5% { transform: translate(-51%, -49%) scale(1.02); filter: hue-rotate(90deg); }
+            10% { transform: translate(-49%, -51%) scale(0.98); filter: hue-rotate(-90deg); }
+            15% { transform: translate(-50%, -50%) scale(1); filter: none; }
+            100% { transform: translate(-50%, -50%); }
+        }
+
+        .glitch-active {
+            animation: quick-glitch 0.35s linear;
+        }
+
+
+        #error-popup-main {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 320px; 
+            padding: 4px;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.4);
+            z-index: 10002;
+            transition: all 0.3s;
+        }
+
+
+        @media (min-width: 768px) {
+            #error-popup-main {
+                max-width: 600px !important; 
+                width: 600px !important;
+            }
+        }
+
+
+        .theme-system {
+            background: #000000 !important;
+            border: 2px solid #00ff00 !important;
+        }
+
+        .theme-system #popup-title-tag {
+            color: #00ff00 !important;
+            font-size: 0.8rem !important; 
+        }
+
+        .theme-system #error-message {
+            color: #00ff00 !important;
+            font-size: 1rem !important; 
+            font-family: 'Courier New', monospace !important;
+            line-height: 1.5;
+        }
+</style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">Yuhan_OS_v1.1.exe</div>
+            <div class="title-bar-controls">
+                <button onclick="toggleSidebar('left')" aria-label="Minimize">_</button>
+                <button onclick="toggleSidebar('right')" aria-label="Maximize">◻</button>
+                
+                <button class="btn-close" onclick="attemptClose()" aria-label="Close">X</button>
+            </div>
+        </div>
+        
+        <div class="nav-menu">
+            <a href="/">[Home]</a>
+            <a href="/postlist.html">[Post]</a>
+            <a href="/guestbook.html">[Guest Book]</a>
+        </div>
+
+        <div class="search-container">
+            <div class="search-label">Search:</div>
+            <input type="text" id="global-search" placeholder="Enter file name..." onkeypress="if(event.keyCode==13) { searchFile(); }">
+            <button class="search-btn" onclick="searchFile()">[Go]</button>
+        </div>
+
+        <div class="window-body">
+            {{ content }}
+        </div>
+    </div>
+
+    <aside id="sidebar-left" class="sidebar sidebar-left">
+        <div class="title-bar" style="background: #808080;">
+            <div class="title-bar-text">EXPLORER.exe</div>
+            <div class="title-bar-controls">
+                <button onclick="toggleSidebar('left')">X</button>
+            </div>
+        </div>
+        <div class="window-body" style="font-size: 0.85rem; padding: 10px;">
+            <p style="margin: 0 0 10px 0; color: #000080; font-weight: bold; border-bottom: 1px solid #808080;">C:\Yuhan_OS_v1\CATEGORIES</p>
+            <ul style="list-style: none; padding-left: 5px; margin: 0; line-height: 2;">
+                <li>📄 <a href="/postlist.html" onclick="handleCategoryClick()" style="text-decoration: none; color: #000;">[ALL_POSTS]</a></li>
+                <li>📁 <a href="/category.html?type=test" onclick="handleCategoryClick()" style="text-decoration: none; color: #000;">TEST</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    
+    <aside id="sidebar-right" class="sidebar sidebar-right">
+        <div class="title-bar" style="background: #808080;">
+            <div class="title-bar-text">USER_PROFILE</div>
+            <div class="title-bar-controls">
+                <button onclick="toggleSidebar('right')">X</button>
+            </div>
+        </div>
+
+        <div class="window-body profile-container">
+            <div class="profile-img-box">
+                <img src="{{ site.baseurl }}/profile.png" alt="Profile Image">
+            </div>
+
+            <div class="profile-nickname">
+                NICKNAME: YUHAN<br>
+                ID: gun1234
+            </div>
+
+            <div class="profile-bio">
+                <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--main-purple);">[ STATUS ]</p>
+                <p style="margin: 0;">
+                    Please verify your Hunter License.<br>
+                    > Current Location: Meteor City<br>
+                    > Level: Pro Hunter
+                </p>
+            </div>
+
+            <div style="margin-top: 15px; font-size: 0.7rem; color: #666; width: 100%; text-align: left; font-family: monospace;">
+                * Last Login: <span id="last-login">Loading...</span>
+            </div>
+        </div>
+    </aside>
+
+
+<div id="popup-overlay" onclick="closePopup()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10001; backdrop-filter: blur(2px);">
+    <div id="error-popup-main" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 320px; padding: 4px; box-shadow: 10px 10px 0px rgba(0,0,0,0.4); z-index: 10002; transition: background 0.3s;">
+        <div style="border: 1px solid white; padding: 15px; text-align: left;">
+            <p id="popup-title-tag" style="font-size: 1rem; font-family: CloudSansCode; margin-bottom: 8px; opacity: 0.8; font-weight: bold; color: #fff;"></p>
+            <p id="error-message" style="margin: 0; color: #fff; font-size: 1.2rem; line-height: 1.4; font-weight: bold;"></p>
+            
+            <div id="guestbook-special-desc" style="display: none;">
+                <p style="margin-top: 15px; font-size: 1rem; margin-bottom: 8px; color: #FFEBEE; opacity: 0.8;">
+                    <br><span style="font-weight: bold;">['방명록 작성이 아니면 죽음을']</span><br>
+                    정해진 기간 내로 방명록에 아무런 텍스트도 작성하지 않을 시, 사망<br>
+                    남은 기간 : D - 365
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        function searchFile() {
+            const query = document.getElementById('global-search').value;
+            if (query.trim() !== "") {
+                window.location.href = "{{ site.baseurl }}/search.html?q=" + encodeURIComponent(query);
+            }
+        }
+
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            const leftStatus = localStorage.getItem('sidebar-left');
+            const rightStatus = localStorage.getItem('sidebar-right');
+            
+            
+            if (window.innerWidth >= 768) {
+                if (leftStatus === 'inactive') {
+                    document.getElementById('sidebar-left').classList.add('inactive');
+                    document.body.classList.add('no-left');
+                }
+                if (rightStatus === 'inactive') {
+                    document.getElementById('sidebar-right').classList.add('inactive');
+                    document.body.classList.add('no-right');
+                }
+            } 
+            
+            else {
+                if (leftStatus === 'active') document.getElementById('sidebar-left').classList.add('active');
+                if (rightStatus === 'active') document.getElementById('sidebar-right').classList.add('active');
+            }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const timeElement = document.getElementById('last-login');
+            if (timeElement) {
+                timeElement.innerText = new Date().toLocaleString();
+            }
+        });
+
+    
+        function attemptClose() {
+            showPopup("권한 오류 (0x0000005): 당신에겐 이 페이지를 종료할 권한이 없습니다.", false);
+        }
+
+        function closePopup() {
+            document.getElementById('popup-overlay').style.display = 'none';
+        }
+
+        function showPopup(msg, isGuestbookError = false) {
+            const popupMain = document.getElementById('error-popup-main');
+            const overlay = document.getElementById('popup-overlay');
+            const specialDesc = document.getElementById('guestbook-special-desc');
+            const titleTag = document.getElementById('popup-title-tag');
+            const errorMsg = document.getElementById('error-message');
+
+            errorMsg.innerText = msg;
+
+            if (isGuestbookError) {
+                popupMain.className = ""; 
+                popupMain.style.background = "#F25567";
+                popupMain.style.border = "1px solid white";
+                titleTag.innerText = "[ 돌발! ]";
+                titleTag.style.color = "#fff";
+                errorMsg.style.color = "#fff";
+                specialDesc.style.display = 'block';
+            } else {
+                popupMain.className = "theme-system"; 
+                popupMain.style.background = "";
+                popupMain.style.border = "";
+                titleTag.innerText = "> SYSTEM_CRITICAL_ERROR";
+                specialDesc.style.display = 'none';
+            }
+
+            overlay.style.display = 'block';
+            popupMain.classList.add('glitch-active');
+            setTimeout(() => { popupMain.classList.remove('glitch-active'); }, 350);
+        }
+
+        function handleCategoryClick() {
+            if (window.innerWidth < 768) {
+                const leftSidebar = document.getElementById('sidebar-left');
+                if (leftSidebar && leftSidebar.classList.contains('active')) {
+                    leftSidebar.classList.remove('active');
+                    localStorage.setItem('sidebar-left', 'closed');
+                }
+            }
+        }
+
+        function toggleSidebar(side) {
+            const left = document.getElementById('sidebar-left');
+            const right = document.getElementById('sidebar-right');
+            const target = side === 'left' ? left : right;
+
+            if (window.innerWidth < 768) {
+                target.classList.toggle('active');
+                const status = target.classList.contains('active') ? 'active' : 'closed';
+                localStorage.setItem(`sidebar-${side}`, status);
+            } else {
+                target.classList.toggle('inactive');
+                if (side === 'left') document.body.classList.toggle('no-left');
+                if (side === 'right') document.body.classList.toggle('no-right');
+                
+                const status = target.classList.contains('inactive') ? 'inactive' : 'active';
+                localStorage.setItem(`sidebar-${side}`, status);
+            }
+        }
+    </script>
+</body>
+</html>
