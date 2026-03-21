@@ -379,6 +379,21 @@
             font-family: 'Courier New', monospace !important;
             line-height: 1.5;
         }
+
+
+        html, body {
+            cursor: url('{{ site.baseurl }}/assets/cursors/Normal.ani'), auto !important;
+        }
+
+
+        a, button, .search-btn, .title-bar-controls button {
+            cursor: url('{{ site.baseurl }}/assets/cursors/Link.ani'), pointer !important;
+        }
+
+
+        input[type="text"], textarea {
+            cursor: url('{{ site.baseurl }}/assets/cursors/Text.ani'), text;
+        }
 </style>
 </head>
 <body>
