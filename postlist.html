@@ -11,12 +11,20 @@ title: Post List
     {% if site.posts.size > 0 %}
         {% for post in site.posts %}
         <li style="margin-bottom: 15px;">
-            <a href="{{ post.url | relative_url }}" style="text-decoration: none; color: inherit; display: block; background: white; border: 1px solid #808080; padding: 15px; box-shadow: inset -1px -1px #000, inset 1px 1px #fff; transition: background 0.1s;">
+            <a href="{{ post.url | relative_url }}" 
+            onclick="return checkPassword(event, '{{ post.password }}', '{{ post.url | relative_url }}')"
+            style="text-decoration: none; color: inherit; display: block; background: white; border: 1px solid #808080; padding: 15px; box-shadow: inset -1px -1px #000, inset 1px 1px #fff; transition: background 0.1s;">
+                
                 <div class="post-item-inner">
-                    <small style="color: #666;">[Date: {{ post.date | date: "%Y-%m-%d" }}]</small><br>
+                    <small style="color: #666;">
+                        [Date: {{ post.date | date: "%Y-%m-%d" }}]
+                        {% if post.password %} <span style="color: #4E00F9; font-weight: bold;">[🔒 CLASSIFIED]</span> {% endif %}
+                    </small><br>
+                    
                     <strong style="color: #000; font-size: 1.1rem; display: block; margin-top: 5px;">
                         📄 {{ post.title }}
                     </strong>
+                    
                     <p style="margin: 8px 0 0 0; font-size: 0.9rem; color: #444;">
                         {{ post.excerpt | strip_html | truncate: 80 }}
                     </p>
