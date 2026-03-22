@@ -9,28 +9,25 @@ title: Category Filter
 
 <ul id="post-list" style="list-style: none; padding: 0;">
     {% for post in site.posts %}
-        <li style="margin-bottom: 15px;">
-            <a href="{{ post.url | relative_url }}" 
-            onclick="return checkPassword(event, '{{ post.password }}', '{{ post.url | relative_url }}')"
-            style="text-decoration: none; color: inherit; display: block; background: white; border: 1px solid #808080; padding: 15px; box-shadow: inset -1px -1px #000, inset 1px 1px #fff; transition: background 0.1s;">
-                
-                <div class="post-item-inner">
-                    <small style="color: #666;">
-                        [Date: {{ post.date | date: "%Y-%m-%d" }}]
-                        {% if post.password %} <span style="color: #4E00F9; font-weight: bold;">[🔒 CLASSIFIED]</span> {% endif %}
-                    </small><br>
-                    
-                    <strong style="color: #000; font-size: 1.1rem; display: block; margin-top: 5px;">
-                        📄 {{ post.title }}
-                    </strong>
-                    
-                    <p style="margin: 8px 0 0 0; font-size: 0.9rem; color: #444;">
+    <li class="post-item" data-category="{{ post.category }}" data-password="{{ post.password }}" style="display: none; margin-bottom: 15px;">
+        <a href="{{ post.url | relative_url }}" 
+           onclick="return checkPassword(event, '{{ post.password }}', '{{ post.url | relative_url }}')"
+           style="text-decoration: none; color: inherit; display: block; background: white; border: 1px solid #808080; padding: 15px; box-shadow: inset -1px -1px #000, inset 1px 1px #fff;">
+            <div class="post-item-inner">
+                <small style="color: #666;">
+                    [Date: {{ post.date | date: "%Y-%m-%d" }}]
+                    {% if post.password %} <span style="color: #4E00F9; font-weight: bold;">[🔒 CLASSIFIED]</span> {% endif %}
+                </small><br>
+                <strong style="color: #000; font-size: 1.1rem; display: block; margin-top: 5px;">
+                    📄 {{ post.title }}
+                </strong>
+                <p style="margin: 8px 0 0 0; font-size: 0.9rem; color: #444;">
                         {{ post.excerpt | strip_html | truncate: 80 }}
-                    </p>
-                </div>
-            </a>
-        </li>
-        {% endfor %}
+                </p>
+            </div>
+        </a>
+    </li>
+    {% endfor %}
     <li id="no-files" style="display: none; padding: 20px; text-align: center; border: 1px dashed #808080;">
         [!] No files found in this category.
     </li>
@@ -47,7 +44,7 @@ title: Category Filter
         let foundCount = 0;
 
         if (targetCategory) {
-            titleElement.innerText = `📂 C:\\Yuhan_OS_v1\\POSTS\\${targetCategory.toUpperCase()}`;
+            titleElement.innerText = `📂 C:\\Yuhan_O\\POSTS\\${targetCategory.toUpperCase()}`;
             
             posts.forEach(post => {
                 if (post.getAttribute('data-category') === targetCategory) {
