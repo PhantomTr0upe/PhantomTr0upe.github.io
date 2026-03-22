@@ -22,7 +22,11 @@ title: Category Filter
                     📄 {{ post.title }}
                 </strong>
                 <p style="margin: 8px 0 0 0; font-size: 0.9rem; color: #444;">
+                    {% if post.password %}
+                        <span style="color: #666;">보호된 글입니다.</span>
+                    {% else %}
                         {{ post.excerpt | strip_html | truncate: 80 }}
+                    {% endif %}
                 </p>
             </div>
         </a>
