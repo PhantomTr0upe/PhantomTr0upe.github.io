@@ -492,6 +492,30 @@
     </div>
 </div>
 
+<div id="password-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center;">
+    <div class="window" style="width: 300px; background: var(--window-bg); border: 2px solid; border-color: var(--window-border-light) var(--window-border-dark) var(--window-border-dark) var(--window-border-light); padding: 2px; box-shadow: 2px 2px 10px rgba(0,0,0,0.5);">
+        
+        <div class="title-bar" style="background: #000080; display: flex; justify-content: space-between; align-items: center; padding: 3px 5px;">
+            <div class="title-bar-text" style="color: white; font-weight: bold; font-size: 12px; font-family: 'MS Sans Serif', sans-serif;">🛡️ 보호된 글입니다.</div>
+            <div class="title-bar-controls">
+                <button onclick="closePasswordModal()" style="padding: 0 5px; font-size: 10px; font-weight: bold; cursor: pointer;">X</button>
+            </div>
+        </div>
+
+        <div class="window-body" style="padding: 15px; text-align: center;">
+            <p id="pw-msg" style="margin: 0 0 10px 0; font-size: 13px;">비밀번호를 입력해 주세요.</p>
+            <p id="pw-error" style="color: red; font-size: 11px; margin: -5px 0 10px 0; display: none;">비밀번호가 틀렸습니다.</p>
+            
+            <input type="password" id="pw-input" style="width: 90%; padding: 3px; border: 2px inset white; background: white; margin-bottom: 15px; outline: none;" onkeyup="if(window.event.keyCode==13){submitPassword()}">
+            
+            <div style="text-align: right;">
+                <button onclick="submitPassword()" style="padding: 4px 20px; font-family: 'MS Sans Serif', sans-serif; cursor: pointer;">Go</button>
+                <button onclick="closePasswordModal()" style="padding: 4px 10px; font-family: 'MS Sans Serif', sans-serif; cursor: pointer;">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script>
         function searchFile() {
             const query = document.getElementById('global-search').value;
@@ -599,25 +623,62 @@
             }
         }
 
+        let currentTargetUrl = "";
+        let correctPassword = "";
+
+
         function checkPassword(event, postPassword, postUrl) {
-            if (!postPassword || postPassword === "") {
+            if (!postPassword || postPassword === "undefined" || postPassword === "") {
                 return true; 
             }
 
-            // 링크 이동 일단 정지
-            event.preventDefault();
+            event.preventDefault(); 
+            
 
-            // 윈도우 98 스타일의 입력창 호출
-            const userInput = prompt("🔒 [SYSTEM] 해당 데이터는 암호화되어 있습니다.\n접근을 위해 비밀번호를 입력하세요.");
+            currentTargetUrl = postUrl;
+            correctPassword = postPassword;
 
-            if (userInput === postPassword) {
-                alert("🔓");
-                window.location.href = postUrl;
-            } else if (userInput !== null) {
-                alert("비밀번호가 잘못되었습니다.");
-            }
+
+            document.getElementById('pw-input').value = "";
+            document.getElementById('pw-error').style.display = "none";
+            document.getElementById('password-modal').style.display = "flex";
+            document.getElementById('pw-input').focus();
             
             return false;
+        }
+
+
+        function submitPassword() {
+            const userInput = document.getElementById('pw-input').value;
+            const errorMsg = document.getElementById('pw-error');
+            const msgElement = document.getElementById('pw-msg');
+
+            if (userInput === correctPassword) {
+                errorMsg.style.display = "none";
+                msgElement.innerHTML = "<span style='color: #000080; font-weight: bold;'>%EA%B8%B0%EB%8B%A4%EB%A0%B8%EC%96%B4</span>";
+                
+
+                document.getElementById('pw-input').style.display = "none";
+                document.querySelector("#password-modal button[onclick='submitPassword()']").style.display = "none";
+
+
+                setTimeout(() => {
+                    window.location.href = currentTargetUrl;
+                }, 800);
+
+            } else {
+                errorMsg.style.display = "block";
+                document.getElementById('pw-input').value = "";
+                document.getElementById('pw-input').focus();
+            }
+        }
+
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').style.display = "none";
+            document.getElementById('pw-input').style.display = "inline-block";
+            document.querySelector("#password-modal button[onclick='submitPassword()']").style.display = "inline-block";
+            document.getElementById('pw-msg').innerText = "비밀번호를 입력해 주세요.";
         }
     </script>
 </body>
