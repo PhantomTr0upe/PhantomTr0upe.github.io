@@ -392,6 +392,63 @@
         input[type="text"], textarea {
             cursor: url('{{ site.baseurl }}/assets/cursors/Text.cur'), text !important;
         }
+
+
+        .sidebar-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .folder-header {
+            display: flex;
+            align-items: center;
+            padding: 4px 6px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.1s;
+        }
+
+        .folder-header:hover {
+            background: #000080;
+            color: white;
+        }
+
+        .folder-icon {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+
+        .folder-content {
+            list-style: none !important;
+            padding-left: 18px !important;
+            margin: 0 !important;
+            max-height: 0; 
+            overflow: hidden;
+            transition: max-height 0.3s ease-out; 
+        }
+
+        .folder-content li {
+            padding: 2px 0;
+            white-space: nowrap;
+        }
+
+        .folder-content a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        .folder-content a:hover {
+            text-decoration: underline !important;
+        }
+
+
+        .folder-content.open {
+            max-height: 200px; 
+            margin-top: 2px !important;
+            margin-bottom: 5px !important;
+        }
 </style>
 </head>
 <body>
@@ -431,12 +488,37 @@
             </div>
         </div>
         <div class="window-body" style="font-size: 0.85rem; padding: 10px; line-height: 1.7;">
-            <p style="margin: 0 0 10px 0; color: #000080; font-weight: bold; border-bottom: 1px solid #808080; line-height: 1.7;">C:\Yuhan_OS_v1\CATEGORIES</p>
-            <ul style="list-style: none; padding-left: 5px; margin: 0; line-height: 1.7;">
-                <li>📄 <a href="/postlist.html" onclick="handleCategoryClick()" style="text-decoration: none; color: #000;">[ALL_POSTS]</a></li>
-                <li>📁 <a href="/category.html?type=test" onclick="handleCategoryClick()" style="text-decoration: none; color: #000;">TEST</a></li>
-                <li>🔒 <a href="/category.html?type=secret" onclick="handleCategoryClick()" style="text-decoration: none; color: #000;">SECRET</a></li>
-            </ul>
+            <p style="margin: 0 0 10px 0; color: #000080; font-weight: bold; border-bottom: 1px solid #808080;">C:\Yuhan_OS_v1\EXPLORER</p>
+            
+            <div class="sidebar-container">
+                <div class="folder-wrapper">
+                    <div class="folder-header" onclick="toggleFolder('folder-posts', this)">
+                        <span class="folder-icon">📁</span> <strong>C:\POSTS</strong>
+                    </div>
+                    <ul id="folder-posts" class="folder-content">
+                        <li>📄 <a href="/postlist.html" onclick="handleCategoryClick()">[ALL_POSTS]</a></li>
+                        <li>📄 <a href="/category.html?type=test" onclick="handleCategoryClick()">TEST.log</a></li>
+                    </ul>
+                </div>
+
+                <div class="folder-wrapper">
+                    <div class="folder-header" onclick="toggleFolder('folder-sys', this)">
+                        <span class="folder-icon">📁</span> <strong>C:\SYSTEM</strong>
+                    </div>
+                    <ul id="folder-sys" class="folder-content">
+                        <li>🔒 <a href="/category.html?type=secret" onclick="handleCategoryClick()" style="color: #ff0000; font-weight: bold;">SECRET.exe</a></li>
+                    </ul>
+                </div>
+
+                <div class="folder-wrapper">
+                    <div class="folder-header" onclick="toggleFolder('folder-archive', this)">
+                        <span class="folder-icon">📁</span> <strong>C:\ARCHIVE</strong>
+                    </div>
+                    <ul id="folder-archive" class="folder-content">
+                        <li>💾 <a href="#" onclick="handleCategoryClick()">BACKUP_2024.bak</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </aside>
 
@@ -704,6 +786,21 @@
                 if (errorMsg) {
                     errorMsg.style.display = "none";
                 }
+            }
+        }
+
+        function toggleFolder(id, headerElement) {
+            const content = document.getElementById(id);
+            const icon = headerElement.querySelector('.folder-icon');
+            
+
+            content.classList.toggle('open');
+            
+
+            if (content.classList.contains('open')) {
+                icon.innerText = "📂"; 
+            } else {
+                icon.innerText = "📁"; 
             }
         }
     </script>
