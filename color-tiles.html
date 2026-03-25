@@ -3,45 +3,62 @@ layout: default
 title: Color Tiles
 ---
 
-<div class="window" style="max-width: 600px; margin: 0 auto;">
-    <div class="title-bar">
-        <div class="title-bar-text">ColorTiles.exe - System Training</div>
+<div id="game-container" style="width: 100%; max-width: 800px; margin: 0 auto; background: #c0c0c0; border: 2px solid; border-color: white #808080 #808080 white; padding: 10px; box-sizing: border-box;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #000080; color: white; padding: 5px 10px; font-family: 'Courier New', monospace; font-size: 14px;">
+        <span>STATUS: ACTIVE</span>
+        <div style="display: flex; gap: 20px;">
+            <span>TIME: <span id="timer" style="color: #0f0;">120</span>s</span>
+            <span>SCORE: <span id="score" style="color: #0f0;">0</span></span>
+        </div>
     </div>
-    <div class="window-body" style="text-align: center; background: #c0c0c0;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; background: #000; color: #0f0; padding: 5px; font-family: monospace;">
-            <span>TIME: <span id="timer">120</span>s</span>
-            <span>SCORE: <span id="score">0</span></span>
+
+    <div id="game-board" style="display: grid; grid-template-columns: repeat(20, 1fr); gap: 1px; background: #808080; border: 2px inset white; width: 100%; aspect-ratio: 2 / 1; cursor: crosshair;">
         </div>
 
-        <div id="game-board" style="display: grid; grid-template-columns: repeat(20, 1fr); gap: 1px; background: #808080; border: 2px inset white; padding: 2px; cursor: crosshair;">
-            </div>
+    <div style="margin-top: 10px; text-align: right;">
+        <button onclick="startGame()" style="padding: 3px 15px; font-family: 'MS Sans Serif', sans-serif; cursor: pointer;">Reset Game</button>
+    </div>
+</div>
 
-        <div style="margin-top: 15px;">
-            <button onclick="startGame()" style="padding: 5px 20px; font-weight: bold; cursor: pointer;">NEW GAME</button>
-            <p style="font-size: 11px; color: #444; margin-top: 10px;">
-                * 빈 공간을 클릭하세요. 상하좌우로 가장 가까운 타일과 색이 같으면 획득합니다.<br>
-                * 잘못 클릭하면 시간이 10초 줄어듭니다!
-            </p>
+<div id="result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 20000; align-items: center; justify-content: center;">
+    <div class="window" style="width: 300px; background: #c0c0c0; border: 2px solid; border-color: white #808080 #808080 white; padding: 2px;">
+        <div class="title-bar" style="background: #000080; padding: 3px 5px; display: flex; justify-content: space-between;">
+            <span style="color: white; font-size: 12px; font-weight: bold;">Mission Accomplished</span>
+            <button onclick="closeResultModal()" style="padding: 0 5px; font-size: 10px;">X</button>
+        </div>
+        <div class="window-body" style="padding: 20px; text-align: center; font-family: 'Courier New', monospace;">
+            <p style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">GAME OVER</p>
+            <div style="background: white; border: 2px inset white; padding: 10px; margin-bottom: 20px;">
+                <p style="margin: 5px 0;">YOUR SCORE: <span id="final-score" style="color: blue; font-weight: bold;">0</span></p>
+                <p style="margin: 5px 0; color: #d32f2f;">BEST SCORE: <span id="best-score">0</span></p>
+            </div>
+            <button onclick="startGame(); closeResultModal();" style="padding: 5px 20px; font-weight: bold; cursor: pointer; width: 100%;">Try Again</button>
         </div>
     </div>
 </div>
 
 <script>
     const boardSize = { rows: 10, cols: 20 };
-    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff']; // 빨, 초, 파, 노, 보
+    const colors = ['#ff4444', '#44ff44', '#4444ff', '#ffff44', '#ff44ff'];
     let score = 0;
     let timeLeft = 120;
     let gameInterval;
     let board = [];
 
+    window.addEventListener('pageshow', function(event) {
+        startGame();
+    });
+
     function startGame() {
+        clearInterval(gameInterval);
         score = 0;
         timeLeft = 120;
         document.getElementById('score').innerText = score;
         document.getElementById('timer').innerText = timeLeft;
+        document.getElementById('result-modal').style.display = 'none';
+        
         createBoard();
         
-        clearInterval(gameInterval);
         gameInterval = setInterval(() => {
             timeLeft--;
             document.getElementById('timer').innerText = timeLeft;
@@ -57,24 +74,19 @@ title: Color Tiles
         for (let r = 0; r < boardSize.rows; r++) {
             board[r] = [];
             for (let c = 0; c < boardSize.cols; c++) {
-                const color = Math.random() > 0.2 ? colors[Math.floor(Math.random() * colors.length)] : null;
+                const color = Math.random() > 0.25 ? colors[Math.floor(Math.random() * colors.length)] : null;
                 board[r][c] = color;
 
                 const tile = document.createElement('div');
-                tile.style.width = '100%';
-                tile.style.paddingTop = '100%';
                 tile.style.backgroundColor = color || 'transparent';
-                tile.dataset.row = r;
-                tile.dataset.col = c;
-                tile.onclick = (e) => handleEntryClick(r, c);
-                
+                tile.onclick = () => handleEntryClick(r, c);
                 boardElement.appendChild(tile);
             }
         }
     }
 
     function handleEntryClick(r, c) {
-        if (board[r][c] !== null) return; 
+        if (board[r][c] !== null) return;
 
         const matches = findMatches(r, c);
         if (matches.length > 0) {
@@ -84,14 +96,14 @@ title: Color Tiles
             });
             document.getElementById('score').innerText = score;
         } else {
-            timeLeft -= 10; 
-            if (timeLeft < 0) timeLeft = 0;
+            timeLeft = Math.max(0, timeLeft - 10);
             document.getElementById('timer').innerText = timeLeft;
+            if (timeLeft === 0) endGame();
         }
     }
 
     function findMatches(r, c) {
-        const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]; 
+        const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
         let found = [];
 
         directions.forEach(([dr, dc]) => {
@@ -115,20 +127,29 @@ title: Color Tiles
                 }
             }
         }
-        return [...new Set(result)]; 
+        return [...new Set(result)];
     }
 
     function removeTile(r, c) {
         board[r][c] = null;
         const index = r * boardSize.cols + c;
-        const tile = document.getElementById('game-board').children[index];
-        tile.style.backgroundColor = 'transparent';
+        document.getElementById('game-board').children[index].style.backgroundColor = 'transparent';
     }
 
     function endGame() {
         clearInterval(gameInterval);
-        alert(`GAME OVER! Final Score: ${score}`);
+        
+        const currentBest = localStorage.getItem('color-tiles-best') || 0;
+        if (score > currentBest) {
+            localStorage.setItem('color-tiles-best', score);
+        }
+
+        document.getElementById('final-score').innerText = score;
+        document.getElementById('best-score').innerText = localStorage.getItem('color-tiles-best');
+        document.getElementById('result-modal').style.display = 'flex';
     }
 
-    window.onload = startGame;
+    function closeResultModal() {
+        document.getElementById('result-modal').style.display = 'none';
+    }
 </script>
