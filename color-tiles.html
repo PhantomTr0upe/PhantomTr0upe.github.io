@@ -3,42 +3,42 @@ layout: default
 title: Color Tiles
 ---
 
-<div id="game-container" style="width: 100%; max-width: 800px; margin: 0 auto; background: #c0c0c0; border: 2px solid; border-color: white #808080 #808080 white; padding: 10px; box-sizing: border-box;">
+<div id="game-container" style="width: 100%; max-width: 900px; margin: 0 auto; background: #c0c0c0; border: 2px solid; border-color: white #808080 #808080 white; padding: 10px; box-sizing: border-box;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #000080; color: white; padding: 5px 10px; font-family: 'Courier New', monospace; font-size: 14px;">
-        <span>STATUS: ACTIVE</span>
+        <span>SYSTEM: GRID_EXPANSION_MODE</span>
         <div style="display: flex; gap: 20px;">
             <span>TIME: <span id="timer" style="color: #0f0;">120</span>s</span>
             <span>SCORE: <span id="score" style="color: #0f0;">0</span></span>
         </div>
     </div>
 
-    <div id="game-board" style="display: grid; grid-template-columns: repeat(20, 1fr); gap: 1px; background: #808080; border: 2px inset white; width: 100%; aspect-ratio: 2 / 1; cursor: crosshair;">
+    <div id="game-board" style="display: grid; grid-template-columns: repeat(30, 1fr); gap: 1px; background: #404040; border: 2px inset white; width: 100%; aspect-ratio: 2 / 1; cursor: crosshair; overflow: hidden;">
         </div>
 
-    <div style="margin-top: 10px; text-align: right;">
+    <div style="margin-top: 10px; text-align: right; display: flex; justify-content: space-between; align-items: center;">
         <button onclick="startGame()" style="padding: 3px 15px; font-family: 'MS Sans Serif', sans-serif; cursor: pointer;">Reset Game</button>
     </div>
 </div>
 
-<div id="result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 20000; align-items: center; justify-content: center;">
-    <div class="window" style="width: 300px; background: #c0c0c0; border: 2px solid; border-color: white #808080 #808080 white; padding: 2px;">
+<div id="result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 20000; align-items: center; justify-content: center;">
+    <div class="window" style="width: 320px; background: #c0c0c0; border: 2px solid; border-color: white #808080 #808080 white; padding: 2px; box-shadow: 5px 5px 15px rgba(0,0,0,0.5);">
         <div class="title-bar" style="background: #000080; padding: 3px 5px; display: flex; justify-content: space-between;">
-            <span style="color: white; font-size: 12px; font-weight: bold;">Mission Accomplished</span>
+            <span style="color: white; font-size: 12px; font-weight: bold;">Mission Status: Terminated</span>
             <button onclick="closeResultModal()" style="padding: 0 5px; font-size: 10px;">X</button>
         </div>
         <div class="window-body" style="padding: 20px; text-align: center; font-family: 'Courier New', monospace;">
-            <p style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">GAME OVER</p>
-            <div style="background: white; border: 2px inset white; padding: 10px; margin-bottom: 20px;">
-                <p style="margin: 5px 0;">YOUR SCORE: <span id="final-score" style="color: blue; font-weight: bold;">0</span></p>
-                <p style="margin: 5px 0; color: #d32f2f;">BEST SCORE: <span id="best-score">0</span></p>
+            <p style="margin: 0 0 15px 0; font-size: 18px; font-weight: bold; color: #000;">RESULT LOG</p>
+            <div style="background: #eee; border: 2px inset white; padding: 15px; margin-bottom: 20px; text-align: left;">
+                <p style="margin: 5px 0;">> SCORE: <span id="final-score" style="color: blue; font-weight: bold;">0</span></p>
+                <p style="margin: 5px 0;">> BEST : <span id="best-score" style="color: #d32f2f; font-weight: bold;">0</span></p>
             </div>
-            <button onclick="startGame(); closeResultModal();" style="padding: 5px 20px; font-weight: bold; cursor: pointer; width: 100%;">Try Again</button>
+            <button onclick="startGame(); closeResultModal();" style="padding: 8px; font-weight: bold; cursor: pointer; width: 100%; background: #c0c0c0; border: 2px solid; border-color: white #808080 #808080 white;">Try Again</button>
         </div>
     </div>
 </div>
 
 <script>
-    const boardSize = { rows: 10, cols: 20 };
+    const boardSize = { rows: 15, cols: 30 };
     const colors = ['#ff4444', '#44ff44', '#4444ff', '#ffff44', '#ff44ff'];
     let score = 0;
     let timeLeft = 120;
@@ -79,6 +79,9 @@ title: Color Tiles
 
                 const tile = document.createElement('div');
                 tile.style.backgroundColor = color || 'transparent';
+                if (color) {
+                    tile.style.border = "1px solid rgba(255,255,255,0.2)";
+                }
                 tile.onclick = () => handleEntryClick(r, c);
                 boardElement.appendChild(tile);
             }
@@ -133,7 +136,9 @@ title: Color Tiles
     function removeTile(r, c) {
         board[r][c] = null;
         const index = r * boardSize.cols + c;
-        document.getElementById('game-board').children[index].style.backgroundColor = 'transparent';
+        const target = document.getElementById('game-board').children[index];
+        target.style.backgroundColor = 'transparent';
+        target.style.border = "none";
     }
 
     function endGame() {
