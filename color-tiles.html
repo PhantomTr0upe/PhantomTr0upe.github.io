@@ -1,18 +1,18 @@
 ---
 layout: default
-title: Color Tiles
+title: Color Tiles - Hunter Edition
 ---
 
 <div id="game-container" style="width: 100%; max-width: 900px; margin: 0 auto; background: #c0c0c0; border: 2px solid; border-color: white #808080 #808080 white; padding: 10px; box-sizing: border-box;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #000080; color: white; padding: 5px 10px; font-family: 'Courier New', monospace; font-size: 14px;">
-        <span>SYSTEM: GRID_EXPANSION_MODE</span>
+        <span>SYSTEM: OPTIMIZED_GRID_MODE</span>
         <div style="display: flex; gap: 20px;">
             <span>TIME: <span id="timer" style="color: #0f0;">120</span>s</span>
             <span>SCORE: <span id="score" style="color: #0f0;">0</span></span>
         </div>
     </div>
 
-    <div id="game-board" style="display: grid; grid-template-columns: repeat(30, 1fr); gap: 1px; background: #404040; border: 2px inset white; width: 100%; aspect-ratio: 2 / 1; cursor: crosshair; overflow: hidden;">
+    <div id="game-board" style="display: grid; grid-template-columns: repeat(24, 1fr); gap: 1px; background: #404040; border: 2px inset white; width: 100%; aspect-ratio: 2 / 1; cursor: crosshair; overflow: hidden;">
         </div>
 
     <div style="margin-top: 10px; text-align: right; display: flex; justify-content: space-between; align-items: center;">
@@ -38,7 +38,7 @@ title: Color Tiles
 </div>
 
 <script>
-    const boardSize = { rows: 15, cols: 30 };
+    const boardSize = { rows: 12, cols: 24 };
     const colors = ['#ff4444', '#44ff44', '#4444ff', '#ffff44', '#ff44ff'];
     let score = 0;
     let timeLeft = 120;
@@ -74,7 +74,7 @@ title: Color Tiles
         for (let r = 0; r < boardSize.rows; r++) {
             board[r] = [];
             for (let c = 0; c < boardSize.cols; c++) {
-                const color = Math.random() > 0.25 ? colors[Math.floor(Math.random() * colors.length)] : null;
+                const color = Math.random() > 0.4 ? colors[Math.floor(Math.random() * colors.length)] : null;
                 board[r][c] = color;
 
                 const tile = document.createElement('div');
